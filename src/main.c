@@ -1,56 +1,95 @@
 #include <stdio.h>
+
 #include <stdlib.h>
+
 #include <string.h>
-#include "calculator.h"
 
+#include "./../include/calculator.h"
+ 
 int main(int argc, char *argv[]){
-    
-	if (argc < 3 || (argc < 4 && strcmp(argv[1], "car") != 0)) {
-        printf("Erreur de parametres\n");
-        return 1;
-    }
-    
-    char* op = argv[1];
-    char* a = argv[2];
-    double r = 0;
-    int handled = 0;
 
-  
-    if (argc == 4) {
+    // --- Cas du carré : 1 seul nombre ---
+
+    if (argc == 3) {
+
+        char* op = argv[1];
+
+        char* a = argv[2];
+ 
+        if (strcmp(op, "car") == 0) {
+
+            double r = _car(atof(a));
+
+            printf("%lf", r);
+
+            return 0;
+
+        }
+
+    }
+ 
+    // --- Cas des opérations à 2 nombres ---
+
+    if (argc == 4)
+
+    {
+
+        char* op = argv[1];
+
+        char* a = argv[2];
+
         char* b = argv[3];
 
+        double r = 0;
+ 
         if (strcmp(op, "add") == 0) {
+
             r = _add(atof(a), atof(b));
-            handled = 1;
+
+            printf("%lf",r);
+
         }
+
         else if (strcmp(op, "sub") == 0) {
+
             r = _sub(atof(a), atof(b));
-            handled = 1;
+
+            printf("%lf",r);
+
         }
+
         else if (strcmp(op, "mul") == 0) {
+
             r = _mul(atof(a), atof(b));
-            handled = 1;
+
+            printf("%lf",r);
+
         }
+
         else if (strcmp(op, "div") == 0) {
+
             r = _div(atof(a), atof(b));
-            handled = 1;
-        }
-    } 
-    
-   
-    else if (argc == 3) {
-        if (strcmp(op, "car") == 0) {
-            r = _car(atof(a)); 
-            handled = 1;
-        }
-    }
-    
 
-    if (handled) {
-        printf("%lf\n", r); // Format de sortie corrigé pour les tests (avec saut de ligne)
-    } else {
-        printf("Erreur de parametres\n");
+            printf("%lf",r);
+
+        }
+
+        else {
+
+            printf("Erreur de parametres");
+
+        }
+
     }
 
-	return 0;
+    else {
+
+        printf("Erreur : nombre de paramètres invalide");
+
+    }
+ 
+    return 0;
+
 }
+
+ 
