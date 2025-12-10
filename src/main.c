@@ -4,8 +4,10 @@
 #include "calculator.h" 
 
 int main(int argc, char *argv[]){
+    
+    
 	if (argc < 3 || (argc < 4 && strcmp(argv[1], "car") != 0)) {
-        printf("Erreur de parametres: Utilisation correcte: ./calculator <op> <n1> [<n2>]\n");
+        printf("Erreur de parametres: Utilisation: ./calculator <op> <n1> [<n2>]\n");
         return 1;
     }
     
@@ -13,6 +15,7 @@ int main(int argc, char *argv[]){
     char* a = argv[2];
     double r = 0;
     int handled = 0;
+
 
     if (argc == 4) {
         char* b = argv[3];
@@ -35,6 +38,7 @@ int main(int argc, char *argv[]){
         }
     } 
     
+   
     else if (argc == 3) {
         if (strcmp(op, "car") == 0) {
             r = _car(atof(a)); 
@@ -42,9 +46,11 @@ int main(int argc, char *argv[]){
         }
     }
     
+  
     if (handled) {
         printf("%lf", r);
     } else {
+      
         printf("Erreur de parametres");
     }
 
