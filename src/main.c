@@ -1,37 +1,52 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include "calculator.h"
+#include <string.h>
+#include "calculator.h" 
 
-int main(int argc, char argv[]) {
-    if (argc < 3) {
-        printf("Usage: %s <operation> <a> [b]\n", argv[0]);
+int main(int argc, char *argv[]){
+	if (argc < 3 || (argc < 4 && strcmp(argv[1], "car") != 0)) {
+        printf("Erreur de parametres: Utilisation correcte: ./calculator <op> <n1> [<n2>]\n");
         return 1;
     }
+    
+    char* op = argv[1];
+    char* a = argv[2];
+    double r = 0;
+    int handled = 0;
 
-    charop = argv[1];
-    int a = atoi(argv[2]);
-    int result;
+    if (argc == 4) {
+        char* b = argv[3];
 
-    if (strcmp(op, "add") == 0) {
-        int b = atoi(argv[3]);
-        result = add(a, b);
-    } else if (strcmp(op, "sub") == 0) {
-        int b = atoi(argv[3]);
-        result = sub(a, b);
-    } else if (strcmp(op, "mul") == 0) {
-        int b = atoi(argv[3]);
-        result = mul(a, b);
-    } else if (strcmp(op, "div") == 0) {
-        int b = atoi(argv[3]);
-        result = divide(a, b);
-    } else if (strcmp(op, "car") == 0) {
-        result = car(a);
+        if (strcmp(op, "add") == 0) {
+            r = _add(atof(a), atof(b));
+            handled = 1;
+        }
+        else if (strcmp(op, "sub") == 0) {
+            r = _sub(atof(a), atof(b));
+            handled = 1;
+        }
+        else if (strcmp(op, "mul") == 0) {
+            r = _mul(atof(a), atof(b));
+            handled = 1;
+        }
+        else if (strcmp(op, "div") == 0) {
+            r = _div(atof(a), atof(b));
+            handled = 1;
+        }
+    } 
+    
+    else if (argc == 3) {
+        if (strcmp(op, "car") == 0) {
+            r = _car(atof(a)); 
+            handled = 1;
+        }
+    }
+    
+    if (handled) {
+        printf("%lf", r);
     } else {
-        printf("Unknown operation\n");
-        return 1;
+        printf("Erreur de parametres");
     }
 
-    printf("%d\n", result);
-    return 0;
+	return 0;
 }
