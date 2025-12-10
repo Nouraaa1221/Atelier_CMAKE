@@ -1,57 +1,37 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include "./../include/calculator.h"
+#include <stdlib.h>
+#include "calculator.h"
 
-int main(int argc, char *argv[]){
-    
-	if (argc == 4 || (argc == 3 && strcmp(argv[1], "car") == 0))
-	{
-	    char* op = argv[1];
-	    char* a = argv[2];
-	    double r = 0;
-
-	 
-	    if (argc == 4) {
-	        char* b = argv[3];
-
-	        if (strcmp(op, "add") == 0) {
-	            r = _add(atof(a), atof(b));
-	            printf("%lf", r);
-	        }
-	        else if (strcmp(op, "sub") == 0) {
-	            r = _sub(atof(a), atof(b));
-	            printf("%lf", r);
-	        }
-	        else if (strcmp(op, "mul") == 0) {
-	            r = _mul(atof(a), atof(b));
-	            printf("%lf", r);
-	        }
-	        else if (strcmp(op, "div") == 0) {
-	            r = _div(atof(a), atof(b));
-	            printf("%lf", r);
-	        }
-
-	
-	    } else if (argc == 3) {
-            if (strcmp(op, "car") == 0) {
-               
-                r = _car(atof(a)); 
-                printf("%lf", r);
-            } else {
-               
-                printf("Erreur de parametres");
-            }
-	    }
-       
-        else {
-            printf("Erreur de parametres");
-        }
-	}
-	else {
-       
-        printf("Erreur de parametres");
+int main(int argc, char argv[]) {
+    if (argc < 3) {
+        printf("Usage: %s <operation> <a> [b]\n", argv[0]);
+        return 1;
     }
-	return 0;
+
+    charop = argv[1];
+    int a = atoi(argv[2]);
+    int result;
+
+    if (strcmp(op, "add") == 0) {
+        int b = atoi(argv[3]);
+        result = add(a, b);
+    } else if (strcmp(op, "sub") == 0) {
+        int b = atoi(argv[3]);
+        result = sub(a, b);
+    } else if (strcmp(op, "mul") == 0) {
+        int b = atoi(argv[3]);
+        result = mul(a, b);
+    } else if (strcmp(op, "div") == 0) {
+        int b = atoi(argv[3]);
+        result = divide(a, b);
+    } else if (strcmp(op, "car") == 0) {
+        result = car(a);
+    } else {
+        printf("Unknown operation\n");
+        return 1;
+    }
+
+    printf("%d\n", result);
+    return 0;
 }
-		
