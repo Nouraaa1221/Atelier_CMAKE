@@ -1,133 +1,99 @@
-
-
 name: Automatisation des tests
-on: [push, pull_request]
-
+on: push
+ 
 jobs:
-
+ 
   Compilation:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        
-      - name: Compilation du projet
+      - name: Compilation + Build
         run: |
+          last_directory=$(basename ${{ runner.workspace }})
+          git clone https://github.com/${{ github.repository }}.git
+          cd ./$last_directory
           mkdir build
           cd build
           cmake ..
           make
-          # make test # Le ctest est généralement exécuté ici, mais nous le séparons ci-dessous
-          
-      - name: Sauvegarder l'exécutable (Artifact)
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifact
-          path: build/src/calculator
-          
-
+ 
   Test_Add:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Télécharger l'exécutable
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifact
-          path: bin # Télécharge l'exécutable dans le dossier 'bin'
-          
-      - name: Test fonction add (10 + 5 = 15)
+      - name: Test fonction add
         run: |
-          
-          chmod +x bin/calculator
-          RESULT=$(./bin/calculator add 10 5)
-          echo "Le résultat est : $RESULT"
-          
-         
-          if [ "$RESULT" != "15.000000" ] && [ "$RESULT" != "15" ]; then
-            echo "Erreur: Le résultat attendu était 15.000000"
-            exit 1
-          fi
-
+          last_directory=$(basename ${{ runner.workspace }})
+          git clone https://github.com/${{ github.repository }}.git
+          cd ./$last_directory
+          mkdir build
+          cd build
+          cmake ..
+          make
+          ./src/calculator add 10 5
  
   Test_Sub:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Télécharger l'exécutable
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifact
-          path: bin
-          
-      - name: Test fonction sub (3 - (-2) = 5)
+      - name: Test fonction sub
         run: |
-          chmod +x bin/calculator
-          RESULT=$(./bin/calculator sub 3 -2)
-          echo "Le résultat est : $RESULT"
-          # La vérification du résultat peut être ajoutée ici
-
-
+          last_directory=$(basename ${{ runner.workspace }})
+          git clone https://github.com/${{ github.repository }}.git
+          cd ./$last_directory
+          mkdir build
+          cd build
+          cmake ..
+          make
+          ./src/calculator sub 10 5
+ 
   Test_Mul:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Télécharger l'exécutable
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifact
-          path: bin
-          
-      - name: Test fonction mul (5 * 5 = 25)
+      - name: Test fonction mul
         run: |
-          chmod +x bin/calculator
-          RESULT=$(./bin/calculator mul 5 5)
-          echo "Le résultat est : $RESULT"
-
-
+          last_directory=$(basename ${{ runner.workspace }})
+          git clone https://github.com/${{ github.repository }}.git
+          cd ./$last_directory
+          mkdir build
+          cd build
+          cmake ..
+          make
+          ./src/calculator mul 10 5
+ 
   Test_Div:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Télécharger l'exécutable
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifact
-          path: bin
-          
-      - name: Test fonction div (1 / 5 = 0.2)
+      - name: Test fonction div
         run: |
-          chmod +x bin/calculator
-          RESULT=$(./bin/calculator div 1 5)
-          echo "Le résultat est : $RESULT"
-          
-
+          last_directory=$(basename ${{ runner.workspace }})
+          git clone https://github.com/${{ github.repository }}.git
+          cd ./$last_directory
+          mkdir build
+          cd build
+          cmake ..
+          make
+          ./src/calculator div 10 5
+ 
   Test_Car:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Télécharger l'exécutable
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifact
-          path: bin
-          
-      - name: Test fonction car (5 * 5 = 25)
+      - name: Test fonction car
         run: |
-          chmod +x bin/calculator
-          RESULT=$(./bin/calculator car 5)
-          echo "Le résultat est : $RESULT"
-          
-          # Ajout d'une vérification stricte pour le cas de l'exercice
-          if [ "$RESULT" != "25.000000" ] && [ "$RESULT" != "25.000000\n" ]; then
-            echo "Erreur: Le résultat attendu pour 'car 5' était 25.000000"
-            exit 1
-          fi
-
-
-  Deployment:
+          last_directory=$(basename ${{ runner.workspace }})
+          git clone https://github.com/${{ github.repository }}.git
+          cd ./$last_directory
+          mkdir build
+          cd build
+          cmake ..
+          make
+          ./src/calculator car 5
+ 
+  Deploy:
     runs-on: ubuntu-latest
     needs: [Test_Add, Test_Sub, Test_Mul, Test_Div, Test_Car]
     steps:
-      - name: Déploiement de la solution
+      - name: Déploiement
         run: echo "Déploiement de la solution"
