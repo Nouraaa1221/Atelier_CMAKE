@@ -28,3 +28,70 @@ jobs:
           cmake ..
           make
           ./src/calculator add 10 5
+  Test_sub:
+    runs-on: ubuntu-latest
+    needs: Compilation
+    steps:
+      
+name: Checkout
+      uses: actions/checkout@v3
+name: Test fonction sub
+run: |
+  mkdir -p build
+  cd build
+  cmake ..
+  make./src/calculator sub 3 -2,
+,
+
+  Test_mul:
+    runs-on: ubuntu-latest
+    needs: Compilation
+    steps:
+      
+name: Checkout
+      uses: actions/checkout@v3
+name: Test fonction mul
+run: |
+  mkdir -p build
+  cd build
+  cmake ..
+  make./src/calculator mul 5 5,
+,
+
+  Test_div:
+    runs-on: ubuntu-latest
+    needs: Compilation
+    steps:
+      
+name: Checkout
+      uses: actions/checkout@v3
+name: Test fonction div
+run: |
+  mkdir -p build
+  cd build
+  cmake ..
+  make./src/calculator div 1 5,
+,
+
+  Test_car:
+    runs-on: ubuntu-latest
+    needs: Compilation
+    steps:
+      
+name: Checkout
+      uses: actions/checkout@v3
+name: Test fonction car
+run: |
+  mkdir -p build
+  cd build
+  cmake ..
+  make./src/calculator car 5,
+,
+
+  Deployment:
+    runs-on: ubuntu-latest
+    needs: [Test_Add, Test_sub, Test_mul, Test_div, Test_car]
+    steps:
+      
+name: Déploiement de la solution
+      run: echo "Déploiement de la solution"
