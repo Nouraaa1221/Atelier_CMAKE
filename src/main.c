@@ -1,13 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "calculator.h" 
+#include "calculator.h"
 
 int main(int argc, char *argv[]){
     
-    
 	if (argc < 3 || (argc < 4 && strcmp(argv[1], "car") != 0)) {
-        printf("Erreur de parametres: Utilisation: ./calculator <op> <n1> [<n2>]\n");
+        printf("Erreur de parametres\n");
         return 1;
     }
     
@@ -16,7 +15,7 @@ int main(int argc, char *argv[]){
     double r = 0;
     int handled = 0;
 
-
+  
     if (argc == 4) {
         char* b = argv[3];
 
@@ -46,12 +45,11 @@ int main(int argc, char *argv[]){
         }
     }
     
-  
+
     if (handled) {
-        printf("%lf", r);
+        printf("%lf\n", r); // Format de sortie corrigé pour les tests (avec saut de ligne)
     } else {
-      
-        printf("Erreur de parametres");
+        printf("Erreur de parametres\n");
     }
 
 	return 0;
